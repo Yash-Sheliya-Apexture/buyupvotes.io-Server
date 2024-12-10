@@ -1,0 +1,70 @@
+# Node.js dependencies
+/node_modules/
+
+# Environment variables
+server/.env
+client/.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Build and production files
+server/build/
+client/build/
+dist/
+tmp/
+temp/
+public/ # If you generate static files in the client folder
+
+# Lock files
+# server/package-lock.json
+# client/package-lock.json
+# yarn.lock
+
+# Tailwind and PostCSS config (if you don’t want them to be tracked)
+# server/postcss.config.js
+# server/tailwind.config.js
+# client/postcss.config.js
+# client/tailwind.config.js
+
+# Coverage reports from testing
+coverage/
+
+# Output of 'npm pack'
+*.tgz
+
+# Optional npm cache directory
+.npm/
+
+# Ignore compiled JavaScript files
+*.js.map
+
+# Ignore other system files
+*.swp
+*.swo
+
+# Ignore bundled files
+*.bundle.js
+*.min.js
+*.gz
+
+# Ignore all unnecessary generated or build folders
+client/public/
+server/public/
+
+# Ignore other cache or temp files
+.cache/
+.pnp/
+.pnp.js
+.parcel-cache/
