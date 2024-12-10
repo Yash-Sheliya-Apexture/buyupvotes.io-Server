@@ -1,14 +1,14 @@
 import { google } from 'googleapis';
-import credentials from './google-credentials.json' assert { type: 'json' };
 
-// Authenticate Google Sheets API
-export const authenticateGoogleSheets = () => { // Export the function
-  const { client_email, private_key } = credentials;
+// Authenticate Google Sheets API using environment variables
+export const authenticateGoogleSheets = () => {
+  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');  // Fix multiline private key
 
   const auth = new google.auth.JWT(
-    client_email,
+    clientEmail,
     null,
-    private_key,
+    privateKey,
     ['https://www.googleapis.com/auth/spreadsheets']
   );
 
@@ -28,7 +28,7 @@ export const appendDataToSheet = async (data) => {
       data.speed,
       data.link,
       data.quantity,
-      new Date().toLocaleString(), 
+      new Date().toLocaleString(),
     ], // Row of data
   ];
 
@@ -60,3 +60,35 @@ export const appendDataToSheet = async (data) => {
     throw new Error('Failed to append data to Google Sheets');
   }
 };
+
+// Fetch data from Google Sheets
+export const fetchSheetData = async () => {
+  const auth = authenticateGoogleSheets();
+  const sheets = google.sheets({ version: 'v4', auth });
+
+  const spreadsheetId = '16mjIgnRXcoxXw9Se404dSeO2Y9oRRvGaCk8C9HlYysM';
+
+  try {
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: 'Sheet1!A:E', // Get all columns A through E
+    });
+
+    const rows = response.data.values || [];
+    
+    // Skip header row if it exists and map the data
+    const data = rows.slice(1).map(row => ({
+      service: row[0] || '',
+      speed: row[1] || '',
+      link: row[2] || '',
+      quantity: row[3] || '',
+      date: row[4] || ''
+    }));
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching data from sheet:', error);
+    throw new Error('Failed to fetch data from Google Sheets');
+  }
+};
+
