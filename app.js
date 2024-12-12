@@ -20,3 +20,4 @@ app.use(express.json()); // To parse incoming requests with JSON payloads
 app.use("/api/auth", authRoutes); // Authentication Routes
 
 export default app;
+

@@ -1,9 +1,8 @@
 # Node.js dependencies
-/node_modules/
+node_modules/
 
 # Environment variables
-server/.env
-client/.env
+# .env
 
 # Logs
 logs
@@ -20,8 +19,8 @@ Thumbs.db
 .idea/
 
 # Build and production files
-server/build/
-client/build/
+build/
+
 dist/
 tmp/
 temp/
@@ -60,8 +59,7 @@ coverage/
 *.gz
 
 # Ignore all unnecessary generated or build folders
-client/public/
-server/public/
+public/
 
 # Ignore other cache or temp files
 .cache/
