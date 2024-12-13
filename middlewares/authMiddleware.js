@@ -86,22 +86,43 @@
 
 // export default authMiddleware;  // Default export
 
+// import jwt from 'jsonwebtoken';
+
+// const authMiddleware = (req, res, next) => {
+//   const token = req.headers.authorization?.split(' ')[1]; // Get token from "Authorization" header
+
+//   if (!token) {
+//     return res.status(401).json({ message: 'No token provided, authorization denied.' });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the access token
+//     req.user = decoded; // Attach the decoded user information to the request object
+//     next();  // Proceed to the next middleware/route handler
+//   } catch (err) {
+//     console.error(err);
+//     res.status(403).json({ message: 'Token is not valid or expired.' });
+//   }
+// };
+
+// export default authMiddleware;
+
+
 import jwt from 'jsonwebtoken';
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]; // Get token from "Authorization" header
-
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided, authorization denied.' });
-  }
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'No token provided.' });
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the access token
-    req.user = decoded; // Attach the decoded user information to the request object
-    next();  // Proceed to the next middleware/route handler
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
   } catch (err) {
-    console.error(err);
-    res.status(403).json({ message: 'Token is not valid or expired.' });
+    if (err.name === 'TokenExpiredError') {
+      return res.status(401).json({ message: 'Token expired', code: 'TOKEN_EXPIRED' });
+    }
+    res.status(403).json({ message: 'Invalid token.' });
   }
 };
 
