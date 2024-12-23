@@ -186,8 +186,7 @@
 // };
 
 
-import { getOrdersFromSheet, appendDataToSheet } from '../utils/googleSheets.js'; // Adjust path as needed
-import { v4 as uuidv4 } from 'uuid';  // Import the uuid package
+
 
 // export const getUserOrders = async (req, res) => {
 //   try {
@@ -232,6 +231,107 @@ import { v4 as uuidv4 } from 'uuid';  // Import the uuid package
 
 
 
+
+
+
+
+
+// import { getOrdersFromSheet, appendDataToSheet } from '../utils/googleSheets.js'; // Adjust path as needed
+// import { v4 as uuidv4 } from 'uuid';  // Import the uuid package
+
+// export const getUserOrders = async (req, res) => {
+//   try {
+//     // Ensure the authenticated user's ID is present
+//     if (!req.user || !req.user.id) {
+//       return res.status(404).json({ message: 'User not found. Please authenticate and try again.' });
+//     }
+
+//     // Get the user ID from the request (authenticated user)
+//     const userId = req.user.id.trim();
+//     console.log('Looking for orders for user:', userId);
+
+//     // Fetch all orders from the sheet
+//     const allOrders = await getOrdersFromSheet();
+//     console.log('All orders:', allOrders);
+
+//     // Log each order’s userId to ensure they are correct
+//     allOrders.forEach(order => {
+//       console.log(`Order ID: ${order.orderId}, User ID in order: ${order.userId}`);
+//     });
+
+//     // Filter orders by matching userId (ensure both are strings)
+//     const userOrders = allOrders.filter(order => {
+//       const orderUserId = String(order.userId).trim();
+//       console.log(`Comparing: Request User ID (${userId}) with Order User ID (${orderUserId})`);
+//       return orderUserId === userId;
+//     });
+
+//     // If no orders are found for this user, return a 404 response
+//     if (!userOrders.length) {
+//       return res.status(300).json({ message: 'No orders found for this user.' });
+//     }
+
+//     // Send filtered orders as response
+//     res.status(200).json(userOrders);
+//   } catch (err) {
+//     console.error('Error fetching user orders:', err.message);
+
+//     // Handle specific errors that might indicate a 404-like scenario
+//     if (err.code === '404' || err.message.includes('not found')) {
+//       return res.status(404).json({ message: 'Orders not found. Please try again later.' });
+//     }
+
+//     // Handle generic errors
+//     res.status(500).json({ message: 'Failed to retrieve orders. Please try again later.' });
+//   }
+// };
+
+
+
+
+// // Save Order to Google Sheets
+// export const saveOrderToSheet = async (req, res) => {
+//   const { service, speed, link, quantity } = req.body;
+
+//   try {
+//     // Validate required fields
+//     if (!service || !speed || !link || !quantity) {
+//       return res.status(400).json({ message: 'All fields are required.' });
+//     }
+
+//     const parsedQuantity = parseInt(quantity, 10);
+//     if (isNaN(parsedQuantity) || parsedQuantity < 5 || parsedQuantity > 1000) {
+//       return res.status(400).json({ message: 'Quantity must be a number between 5 and 1000.' });
+//     }
+
+//     // Generate order ID and set default status
+//     const orderId = uuidv4();
+//     const status = 'In Progress';
+
+//     // Ensure the correct user ID is being passed
+//     await appendDataToSheet({
+//       orderId,
+//       userId: req.user.id,  // This should be the authenticated user ID
+//       service,
+//       speed,
+//       link,
+//       quantity: parsedQuantity,
+//       status,
+//     });
+
+//     res.status(200).json({ message: 'Order submitted successfully!' });
+//   } catch (err) {
+//     console.error('Error while saving order:', err.message);
+//     res.status(500).json({ message: 'Failed to save order. Please try again later.' });
+//   }
+// };
+
+
+
+import { getOrdersFromSheet, appendDataToSheet } from '../utils/googleSheets.js'; // Adjust path as needed
+import { v4 as uuidv4 } from 'uuid';  // Import the uuid package
+
+// Get User Orders
 export const getUserOrders = async (req, res) => {
   try {
     // Ensure the authenticated user's ID is present
@@ -279,9 +379,6 @@ export const getUserOrders = async (req, res) => {
   }
 };
 
-
-
-
 // Save Order to Google Sheets
 export const saveOrderToSheet = async (req, res) => {
   const { service, speed, link, quantity } = req.body;
@@ -300,6 +397,7 @@ export const saveOrderToSheet = async (req, res) => {
     // Generate order ID and set default status
     const orderId = uuidv4();
     const status = 'In Progress';
+    const started = "Not Started";  // Ensure the started field is defined
 
     // Ensure the correct user ID is being passed
     await appendDataToSheet({
@@ -309,6 +407,7 @@ export const saveOrderToSheet = async (req, res) => {
       speed,
       link,
       quantity: parsedQuantity,
+      started, // Add the started field
       status,
     });
 
@@ -318,32 +417,3 @@ export const saveOrderToSheet = async (req, res) => {
     res.status(500).json({ message: 'Failed to save order. Please try again later.' });
   }
 };
-
-
-// export const getUserOrders = async (req, res) => {
-//   try {
-//     const userId = req.user.id; // Make sure this is the correct user ID!
-//     console.log('Looking for orders for user:', userId);
-
-//     const allOrders = await getOrdersFromSheet();
-//     console.log('All orders:', allOrders);
-
-//     // Log each order's userId to check for any inconsistencies
-//     allOrders.forEach(order => {
-//       console.log(`Order ID: ${order.orderId}, User ID in order: ${order.userId}`);
-//     });
-
-//     // Filter orders for this user
-//     const userOrders = allOrders.filter(order => order.userId === userId);
-//     console.log('Filtered user orders:', userOrders);
-
-//     if (!userOrders.length) {
-//       return res.status(404).json({ message: 'No orders found for this user.' });
-//     }
-
-//     res.status(200).json(userOrders);
-//   } catch (err) {
-//     console.error('Error fetching user orders:', err.message);
-//     res.status(500).json({ message: 'Failed to retrieve orders. Please try again later.' });
-//   }
-// };
