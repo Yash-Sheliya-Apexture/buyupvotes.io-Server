@@ -19,7 +19,7 @@
 
 
 import express from 'express';
-import { register, login, getUserData, refreshToken } from '../controllers/auth.js';
+import { register, login, getUserData,updateUserData, refreshToken, forgotPassword,resetPassword } from '../controllers/auth.js';
 import { saveOrderToSheet, getUserOrders } from '../controllers/OrderController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';  // Import the auth middleware
 
@@ -31,6 +31,11 @@ router.post('/login', login); // Login route
 
 // Protected Route - Get User Data
 router.get('/user', authMiddleware, getUserData);
+// Protected Route - Update User Data
+router.put('/user', authMiddleware, updateUserData); // Update user data route
+
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password', resetPassword);
 
 // Refresh Token Route
 router.post('/refresh-token', refreshToken);
