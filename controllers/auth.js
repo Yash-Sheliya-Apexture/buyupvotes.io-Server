@@ -122,30 +122,77 @@ export const register = async (req, res) => {
 };
 
 
-// Login Controller
+// // Login Controller
+// export const login = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     // Check if user exists
+//     const user = await User.findOne({ email });
+//     if (!user) return res.status(400).json({ message: 'Invalid credentials.' });
+
+//     // Verify password
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials.' });
+
+//     // Generate tokens
+//     const accessToken = jwt.sign(
+//       { id: user._id },
+//       process.env.JWT_SECRET,
+//       { expiresIn: '12h' } // Access token expires in 12 hours
+//     );
+
+//     const refreshToken = jwt.sign(
+//       { id: user._id },
+//       process.env.JWT_REFRESH_SECRET,
+//       { expiresIn: '7d' } // Refresh token expires in 7 days
+//     );
+
+//     // Store the refresh token in the database
+//     user.refreshToken = refreshToken;
+//     await user.save();
+
+//     // Send tokens to the client
+//     res.status(200).json({ accessToken, refreshToken });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Server error.' });
+//   }
+// };
+
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required." });
+    }
+
     // Check if user exists
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials.' });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email." }); // More specific message for email
+    }
 
     // Verify password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials.' });
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid password." }); // Specific message for password mismatch
+    }
 
     // Generate tokens
     const accessToken = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: '12h' } // Access token expires in 12 hours
+      { expiresIn: "12h" } // Access token expires in 12 hours
     );
 
     const refreshToken = jwt.sign(
       { id: user._id },
       process.env.JWT_REFRESH_SECRET,
-      { expiresIn: '7d' } // Refresh token expires in 7 days
+      { expiresIn: "7d" } // Refresh token expires in 7 days
     );
 
     // Store the refresh token in the database
@@ -155,8 +202,11 @@ export const login = async (req, res) => {
     // Send tokens to the client
     res.status(200).json({ accessToken, refreshToken });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error.' });
+    console.error("Login error:", err);
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(500).json({ message: "Server error. Please try again later." });
+    }
+    return res.status(500).json({ message: err.message });
   }
 };
 
@@ -318,28 +368,47 @@ export const forgotPassword = async (req, res) => {
 
 // Reset password function
 export const resetPassword = async (req, res) => {
-  try {
-    const { resetToken, newPassword } = req.body;
+  const { oldPassword, newPassword, confirmPassword } = req.body;
 
-    const user = await User.findOne({ resetToken, resetTokenExpiration: { $gt: Date.now() } });
+  // Validation check
+  if (!oldPassword || !newPassword || !confirmPassword) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ message: 'Passwords do not match.' });
+  }
+
+  try {
+    const userId = req.user.id;  // Getting user ID from the token
+
+    // Find user in the database
+    const user = await User.findById(userId);
     if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired reset token.' });
+      return res.status(404).json({ message: 'User not found.' });
     }
 
-    // Hash the new password and update
+    // Check if the old password matches
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Incorrect old password.' });
+    }
+
+    // Hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
-    user.resetToken = undefined;
-    user.resetTokenExpiration = undefined;
 
+    // Save the user with the new password
     await user.save();
 
-    res.status(200).json({ message: 'Password reset successfully.' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error.' });
+    return res.status(200).json({ message: 'Password updated successfully.' });
+  } catch (error) {
+    console.error('Error resetting password:', error);
+    return res.status(500).json({ message: 'Internal server error.' });
   }
 };
+
+
 
 
 // import User from '../models/User.js'; // Assuming you have a User model
