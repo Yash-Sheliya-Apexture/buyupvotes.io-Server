@@ -122,77 +122,30 @@ export const register = async (req, res) => {
 };
 
 
-// // Login Controller
-// export const login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-
-//     // Check if user exists
-//     const user = await User.findOne({ email });
-//     if (!user) return res.status(400).json({ message: 'Invalid credentials.' });
-
-//     // Verify password
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials.' });
-
-//     // Generate tokens
-//     const accessToken = jwt.sign(
-//       { id: user._id },
-//       process.env.JWT_SECRET,
-//       { expiresIn: '12h' } // Access token expires in 12 hours
-//     );
-
-//     const refreshToken = jwt.sign(
-//       { id: user._id },
-//       process.env.JWT_REFRESH_SECRET,
-//       { expiresIn: '7d' } // Refresh token expires in 7 days
-//     );
-
-//     // Store the refresh token in the database
-//     user.refreshToken = refreshToken;
-//     await user.save();
-
-//     // Send tokens to the client
-//     res.status(200).json({ accessToken, refreshToken });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Server error.' });
-//   }
-// };
-
-
+// Login Controller
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate input
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required." });
-    }
-
     // Check if user exists
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email." }); // More specific message for email
-    }
+    if (!user) return res.status(400).json({ message: 'Invalid credentials.' });
 
     // Verify password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid password." }); // Specific message for password mismatch
-    }
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials.' });
 
     // Generate tokens
     const accessToken = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "12h" } // Access token expires in 12 hours
+      { expiresIn: '12h' } // Access token expires in 12 hours
     );
 
     const refreshToken = jwt.sign(
       { id: user._id },
       process.env.JWT_REFRESH_SECRET,
-      { expiresIn: "7d" } // Refresh token expires in 7 days
+      { expiresIn: '7d' } // Refresh token expires in 7 days
     );
 
     // Store the refresh token in the database
@@ -202,13 +155,60 @@ export const login = async (req, res) => {
     // Send tokens to the client
     res.status(200).json({ accessToken, refreshToken });
   } catch (err) {
-    console.error("Login error:", err);
-    if (process.env.NODE_ENV === 'production') {
-      return res.status(500).json({ message: "Server error. Please try again later." });
-    }
-    return res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: 'Server error.' });
   }
 };
+
+
+// export const login = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     // Validate input
+//     if (!email || !password) {
+//       return res.status(400).json({ message: "Email and password are required." });
+//     }
+
+//     // Check if user exists
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(401).json({ message: "Invalid email." }); // More specific message for email
+//     }
+
+//     // Verify password
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(401).json({ message: "Invalid password." }); // Specific message for password mismatch
+//     }
+
+//     // Generate tokens
+//     const accessToken = jwt.sign(
+//       { id: user._id },
+//       process.env.JWT_SECRET,
+//       { expiresIn: "12h" } // Access token expires in 12 hours
+//     );
+
+//     const refreshToken = jwt.sign(
+//       { id: user._id },
+//       process.env.JWT_REFRESH_SECRET,
+//       { expiresIn: "7d" } // Refresh token expires in 7 days
+//     );
+
+//     // Store the refresh token in the database
+//     user.refreshToken = refreshToken;
+//     await user.save();
+
+//     // Send tokens to the client
+//     res.status(200).json({ accessToken, refreshToken });
+//   } catch (err) {
+//     console.error("Login error:", err);
+//     if (process.env.NODE_ENV === 'production') {
+//       return res.status(500).json({ message: "Server error. Please try again later." });
+//     }
+//     return res.status(500).json({ message: err.message });
+//   }
+// };
 
 
 // Refresh Token Controller
