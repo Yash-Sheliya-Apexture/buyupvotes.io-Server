@@ -35,7 +35,7 @@ router.get('/user', authMiddleware, getUserData);
 router.put('/user', authMiddleware, updateUserData); // Update user data route
 
 router.post('/forgot-password', forgotPassword);
-router.post('/reset-password', resetPassword);
+router.post('/reset-password', authMiddleware, resetPassword);
 
 // Refresh Token Route
 router.post('/refresh', refreshAccessToken);

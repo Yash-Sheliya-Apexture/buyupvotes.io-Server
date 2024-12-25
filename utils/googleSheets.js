@@ -871,20 +871,19 @@ export const getOrdersFromSheet = async () => {
   const spreadsheetId = '16mjIgnRXcoxXw9Se404dSeO2Y9oRRvGaCk8C9HlYysM';  // Your Google Sheet ID
 
   try {
-    // Get the existing data to determine where to append
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId,
-      range: 'Sheet1!A1:I',  // This includes all 8 columns from A to I
+      range: 'Sheet1!A1:I',  // Fetch all columns (A to I)
     });
 
-    // Log the response data to inspect it
     console.log('Response from Google Sheets:', response.data);
 
-    // Check if response.data.values exists before slicing
+    // Ensure the response has values and return them in the correct format
     if (!response.data.values || response.data.values.length === 0) {
       throw new Error('No data found in the sheet.');
     }
 
+    // Map through the rows and return an array of orders
     return response.data.values.slice(1).map(row => ({
       orderId: row[0] || '',
       userId: row[1] || '',
@@ -902,4 +901,42 @@ export const getOrdersFromSheet = async () => {
   }
 };
 
+
+
+// export const getOrdersFromSheet = async () => {
+//   const auth = authenticateGoogleSheets();
+//   const sheets = google.sheets({ version: 'v4', auth });
+//   const spreadsheetId = '16mjIgnRXcoxXw9Se404dSeO2Y9oRRvGaCk8C9HlYysM';  // Your Google Sheet ID
+
+//   try {
+//     // Get the existing data to determine where to append
+//     const response = await sheets.spreadsheets.values.get({
+//       spreadsheetId,
+//       range: 'Sheet1!A1:I',  // This includes all 8 columns from A to I
+//     });
+
+//     // Log the response data to inspect it
+//     console.log('Response from Google Sheets:', response.data);
+
+//     // Check if response.data.values exists before slicing
+//     if (!response.data.values || response.data.values.length === 0) {
+//       throw new Error('No data found in the sheet.');
+//     }
+
+//     return response.data.values.slice(1).map(row => ({
+//       orderId: row[0] || '',
+//       userId: row[1] || '',
+//       service: row[2] || '',
+//       speed: row[3] || '',
+//       link: row[4] || '',
+//       quantity: row[5] || '',
+//       date: row[6] || '',
+//       status: row[7] || 'Pending',
+//       started: row[8] && row[8] !== '-' ? row[8] : 'Not Started',
+//     }));
+//   } catch (err) {
+//     console.error('Error fetching orders from Google Sheets:', err.message);
+//     throw err;
+//   }
+// };
 
