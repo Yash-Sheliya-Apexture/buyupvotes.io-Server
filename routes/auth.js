@@ -19,7 +19,7 @@
 
 
 import express from 'express';
-import { register, login, getUserData,updateUserData, refreshAccessToken, forgotPassword,resetPassword } from '../controllers/auth.js';
+import { register, login, getUserData,updateUserData, refreshAccessToken,resetPassword, forgotPassword,verifyOtpAndResetPassword ,resendResetOtp } from '../controllers/auth.js';
 import { saveOrderToSheet, getUserOrders } from '../controllers/OrderController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';  // Import the auth middleware
 
@@ -34,11 +34,13 @@ router.get('/user', authMiddleware, getUserData);
 // Protected Route - Update User Data
 router.put('/user', authMiddleware, updateUserData); // Update user data route
 
-router.post('/forgot-password', forgotPassword);
-router.post('/reset-password', authMiddleware, resetPassword);
+router.post('/reset-password', authMiddleware, resetPassword)
+router.post('/forgot-password', forgotPassword); // Request OTP
+router.post('/resend-reset-otp', resendResetOtp);  // Resend OTP
+router.post('/verify-otp-reset-password', verifyOtpAndResetPassword); // Verify OTP and reset password
 
 // Refresh Token Route
-router.post('/refresh', refreshAccessToken);
+router.post('/refresh-token', refreshAccessToken);
 
 // Order Routes (Protected)
 router.post('/submit-order', authMiddleware, saveOrderToSheet); // Submit Order Route
