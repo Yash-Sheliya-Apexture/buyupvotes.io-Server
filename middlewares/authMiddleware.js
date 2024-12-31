@@ -199,20 +199,103 @@
 
 
 
-// authMiddleware.js
+// // authMiddleware.js
+// import jwt from 'jsonwebtoken';
+
+// const authMiddleware = (req, res, next) => {
+//   const token = req.headers.authorization?.split(' ')[1]; // Extract token from the Authorization header
+
+//   if (!token) {
+//     return res.status(401).json({ message: 'No token provided, authorization denied.' });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = decoded;  // Attach the user info to the request object
+//     next();
+//   } catch (err) {
+//     console.error('Token verification failed:', err.message);
+//     return res.status(401).json({ message: 'Invalid or expired token, authorization denied.' });
+//   }
+// };
+
+// export default authMiddleware;
+
+
+// // authMiddleware.js
+// import jwt from 'jsonwebtoken';
+
+// const authMiddleware = (req, res, next) => {
+//   const authHeader = req.headers.authorization; // Authorization header
+
+//   if (!authHeader) {
+//     return res.status(401).json({ message: 'No token provided, authorization denied.' });
+//   }
+
+//   // Extract token after "Bearer " if present
+//   const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : authHeader;
+
+//   try {
+//     // Verify token
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = decoded; // Attach decoded user information to the request
+//     next(); // Proceed to the next middleware or route handler
+//   } catch (err) {
+//     console.error('Token verification failed:', err.message);
+//     return res.status(401).json({ message: 'Invalid or expired token, authorization denied.' });
+//   }
+// };
+
+// export default authMiddleware;
+
+
+// import jwt from 'jsonwebtoken';
+
+// const authMiddleware = (req, res, next) => {
+//   const authHeader = req.headers.authorization;
+
+//   if (!authHeader || !authHeader.startsWith('Bearer ')) {
+//     return res.status(401).json({ message: 'Authorization token is missing or invalid format.' });
+//   }
+
+//   // Extract token after "Bearer " if present
+//   const token = authHeader.split(' ')[1];
+
+
+//   try {
+//     // Verify token
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = decoded; // Attach decoded user information to the request
+//     next(); // Proceed to the next middleware or route handler
+//   } catch (err) {
+//     console.error('Token verification failed:', err.message);
+//     return res.status(401).json({ message: 'Invalid or expired token, authorization denied.' });
+//   }
+// };
+
+// export default authMiddleware;
+
+
+
+
+// middlewares/authMiddleware.js
 import jwt from 'jsonwebtoken';
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]; // Extract token from the Authorization header
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided, authorization denied.' });
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Authorization token is missing or invalid format.' });
   }
 
+  // Extract token after "Bearer " if present
+  const token = authHeader.split(' ')[1];
+
   try {
+    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;  // Attach the user info to the request object
-    next();
+      req.user = {id: decoded.id}; // Attach the decoded payload to req.user and make sure it's accessible through req.user.id
+    next(); // Proceed to the next middleware or route handler
   } catch (err) {
     console.error('Token verification failed:', err.message);
     return res.status(401).json({ message: 'Invalid or expired token, authorization denied.' });
