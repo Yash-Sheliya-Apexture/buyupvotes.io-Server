@@ -45,44 +45,6 @@
 
 
 
-import express from 'express';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js'; // Ensure you have proper DB connection setup
-import authRoutes from './routes/auth.js'; // Authentication routes (sign in, sign up, etc.)
-import cors from 'cors';  // Import cors package
-import contactRoutes from './routes/contact.js'; // Contact form or any related routes
-
-dotenv.config();  // Load environment variables
-connectDB(); // Establish database connection
-
-const app = express();
-
-app.use(cors({
-  origin: ['https://buyupvotes-io-client.vercel.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // Important if you're using cookies for authentication
-}));
-
-// Cache control headers - Disable caching for the API responses
-app.use((req, res, next) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-  next();
-});
-
-// Middleware to parse incoming JSON requests
-app.use(express.json()); // To parse incoming requests with JSON payloads
-
-// API Routes
-app.use("/api/auth", authRoutes); // Authentication Routes (signup, login, etc.)
-app.use('/api/contact', contactRoutes); // Contact Us Routes (if you have contact form, etc.)
-
-export default app;
-
-
-
 // import express from 'express';
 // import dotenv from 'dotenv';
 // import connectDB from './config/db.js';
@@ -176,3 +138,78 @@ export default app;
 // }
 
 // export default app;
+
+
+
+
+// import express from 'express';
+// import dotenv from 'dotenv';
+// import connectDB from './config/db.js'; // Ensure you have proper DB connection setup
+// import authRoutes from './routes/auth.js'; // Authentication routes (sign in, sign up, etc.)
+// import cors from 'cors';  // Import cors package
+// import contactRoutes from './routes/contact.js'; // Contact form or any related routes
+
+// dotenv.config();  // Load environment variables
+// connectDB(); // Establish database connection
+
+// const app = express();
+
+// app.use(cors({
+//   origin: ['http://localhost:5173'],
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true, // Important if you're using cookies for authentication
+// }));
+
+// // Cache control headers - Disable caching for the API responses
+// app.use((req, res, next) => {
+//   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+//   res.setHeader("Pragma", "no-cache");
+//   res.setHeader("Expires", "0");
+//   next();
+// });
+
+// // Middleware to parse incoming JSON requests
+// app.use(express.json()); // To parse incoming requests with JSON payloads
+
+// // API Routes
+// app.use("/api/auth", authRoutes); // Authentication Routes (signup, login, etc.)
+// app.use('/api/contact', contactRoutes); // Contact Us Routes (if you have contact form, etc.)
+
+// export default app;
+
+
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import authRoutes from './routes/auth.js';
+import cors from 'cors';
+import contactRoutes from './routes/contact.js';
+import cookieParser from 'cookie-parser'; // Import cookie-parser
+
+dotenv.config();
+connectDB();
+
+const app = express();
+
+app.use(cors({
+  origin: ['https://buyupvotes-io-client.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, // Important for cookies
+}));
+app.use(cookieParser()); // Add cookie-parser middleware
+
+// Cache control headers
+app.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  next();
+});
+
+app.use(express.json());
+app.use("/api/auth", authRoutes);
+app.use('/api/contact', contactRoutes);
+
+export default app;
