@@ -179,13 +179,52 @@
 // export default app;
 
 
+// import express from 'express';
+// import dotenv from 'dotenv';
+// import connectDB from './config/db.js';
+// import authRoutes from './routes/auth.js';
+// import cors from 'cors';
+// import contactRoutes from './routes/contact.js';
+// import cookieParser from 'cookie-parser'; // Import cookie-parser
+
+// dotenv.config();
+// connectDB();
+
+// const app = express();
+
+// app.use(cors({
+//   origin: ['http://localhost:5173'],
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true, // Important for cookies
+// }));
+// app.use(cookieParser()); // Add cookie-parser middleware
+
+// // Cache control headers
+// app.use((req, res, next) => {
+//   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+//   res.setHeader("Pragma", "no-cache");
+//   res.setHeader("Expires", "0");
+//   next();
+// });
+
+// app.use(express.json());
+// app.use("/api/auth", authRoutes);
+// app.use('/api/contact', contactRoutes);
+
+// export default app;
+
+
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import authRoutes from './routes/auth.js';
 import cors from 'cors';
 import contactRoutes from './routes/contact.js';
-import cookieParser from 'cookie-parser'; // Import cookie-parser
+import paymentRoutes from './routes/paymentRoutes.js'; // Import payment routes
+import cookieParser from 'cookie-parser';
+import { errorHandler } from './middlewares/errorMiddleware.js';
+
 
 dotenv.config();
 connectDB();
@@ -200,6 +239,7 @@ app.use(cors({
 }));
 app.use(cookieParser()); // Add cookie-parser middleware
 
+
 // Cache control headers
 app.use((req, res, next) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -211,5 +251,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use('/api/contact', contactRoutes);
+app.use("/api/payment", paymentRoutes); // Use payment routes
+
+app.use(errorHandler);
 
 export default app;
