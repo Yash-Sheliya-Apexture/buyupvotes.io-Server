@@ -602,7 +602,7 @@ export const saveOrderToSheet = async (req, res) => {
     }
 
     const orderId = uuidv4();
-    const status = 'In Progress';
+    const status = 'Pending';
     const started = 'Not Started';
 
     await appendDataToSheet({
