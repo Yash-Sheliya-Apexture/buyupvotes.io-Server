@@ -38,11 +38,15 @@ const userSchema = new mongoose.Schema(
     otpExpiration: { type: Date }, // OTP expiration time
     resetToken: { type: String }, // For password reset token
     resetTokenExpiration: { type: Date }, // Token expiration time
-     role: {
-            type: String,
-            enum: ['user', 'admin'],  // Only allow 'user' or 'admin'
-            default: 'user',            // Default role is 'user'
-        },
+    totalAmount: {
+      type: Number,
+      default: 0, // Initialize to 0
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],  // Only allow 'user' or 'admin'
+      default: 'user',            // Default role is 'user'
+    },
   },
   { timestamps: true }
 );
