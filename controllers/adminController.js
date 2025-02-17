@@ -555,7 +555,7 @@ import User from '../models/User.js';
 // Get All Users (Admin only)
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find().select('_id firstName lastName email totalAmount'); // Include _id, totalAmount, and other needed fields
+        const users = await User.find().select('_id firstName lastName email role'); // Include _id, totalAmount, and other needed fields
         res.status(200).json(users);
     } catch (error) {
         console.error('Error fetching users:', error);
