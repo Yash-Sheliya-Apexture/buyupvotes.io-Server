@@ -206,9 +206,69 @@
 // export default Order;
 
 
+// import mongoose from 'mongoose';
+
+// // Define the schema for orders
+// const orderSchema = new mongoose.Schema({
+//     orderId: {
+//         type: String,
+//         required: true,
+//         unique: true,
+//     },
+//     userId: {
+//         type: String,
+//         required: true,
+//     },
+//     category: {
+//         type: String,
+//         required: true,
+//     },
+//     service: {
+//         type: String,
+//         required: true,
+//     },
+//     link: {
+//         type: String,
+//         required: true,
+//     },
+//     quantity: {
+//         type: Number,
+//         required: true,
+//         min: 5,
+//         max: 1000,
+//     },
+//     completedVotes: {
+//         type: Number,
+//         default: 0,
+//     },
+//     comments: {
+//         type: String,
+//         required: false,
+//     },
+//     started: {
+//         type: String,         // The type is String
+//         required: true,      // Make it required
+//         default: 'Not Started' // Default value is "Not Started"
+//     },
+//     status: {
+//         type: String,
+//         required: true,
+//     },
+//     calculatedPrice: {  // Add calculatedPrice field
+//         type: Number,
+//         required: false,  // Make it required if it should always be provided
+//         default: 0,       // Optional default value
+//     },
+// }, { timestamps: true });
+
+// const Order = mongoose.model('Order', orderSchema);
+
+// export default Order;
+
+
+// models/Order.js
 import mongoose from 'mongoose';
 
-// Define the schema for orders
 const orderSchema = new mongoose.Schema({
     orderId: {
         type: String,
@@ -259,8 +319,11 @@ const orderSchema = new mongoose.Schema({
         required: false,  // Make it required if it should always be provided
         default: 0,       // Optional default value
     },
+    isRead: {              // NEW: Notification read status
+        type: Boolean,
+        default: false,
+    }
 }, { timestamps: true });
 
 const Order = mongoose.model('Order', orderSchema);
-
 export default Order;
