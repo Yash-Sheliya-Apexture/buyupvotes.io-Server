@@ -400,7 +400,7 @@ app.use(compression());
 app.use(morgan('dev'));
 
 app.use(cors({
-    origin: ['http://localhost:5173','*'],  // Corrected to include protocol
+    origin: ['https://buyupvotes-io-client.vercel.app','*'],  // Corrected to include protocol
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
