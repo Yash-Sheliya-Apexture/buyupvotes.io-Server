@@ -400,7 +400,7 @@ app.use(compression());
 app.use(morgan('dev'));
 
 app.use(cors({
-    origin: ['https://buyupvotes-io-client.vercel.app','*'],  // Corrected to include protocol
+    origin: ['https://buyupvotes-io-client.vercel.app', '*'],  // Corrected to include protocol
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -419,7 +419,9 @@ app.use((req, res, next) => {
 app.get('/health', (req, res) => {
     res.status(200).send('OK');
 });
-
+app.get('/', (req, res) => {
+    res.send('Welcome to the buyupvotes.io API server!');
+});
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
