@@ -22,5 +22,3 @@ router.post('/', authMiddleware, createPayment);
 router.get('/', authMiddleware, getPayments);
 
 export default router;
-
-import { ExecutableError } from 'google-auth-library';
