@@ -416,11 +416,12 @@ app.use((req, res, next) => {
     next();
 });
 
+// Health check endpoint
 app.get('/health', (req, res) => {
     res.status(200).send('OK');
 });
 app.get('/', (req, res) => {
-    res.send('Welcome to the buyupvotes.io API server!');
+    res.send('Welcome to the api.redditmarketing.company');
 });
 // Routes
 app.use("/api/auth", authRoutes);

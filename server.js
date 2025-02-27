@@ -29,24 +29,55 @@
 
 
 
+// import app from './app.js';
+// import https from 'https';
+// import http from 'http';
+// import fs from 'fs';
+
+// const PORT = process.env.PORT || 5000;
+// const HTTPS_PORT = 443;
+
+// // Continue to serve HTTP for backward compatibility
+// http.createServer(app).listen(PORT, () => {
+//     console.log(`HTTP Server is running on port ${PORT}`);
+// });
+
+// // Add HTTPS server
+// try {
+//     const httpsOptions = {
+//         key: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/privkey.pem'),
+//         cert: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/fullchain.pem')
+//     };
+
+//     https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
+//         console.log(`HTTPS Server is running on port ${HTTPS_PORT}`);
+//     });
+// } catch (error) {
+//     console.error('Failed to start HTTPS server:', error.message);
+// }
+
+
 import app from './app.js';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
+import path from 'path';  // Import the 'path' module
 
 const PORT = process.env.PORT || 5000;
 const HTTPS_PORT = 443;
 
-// Continue to serve HTTP for backward compatibility
 http.createServer(app).listen(PORT, () => {
     console.log(`HTTP Server is running on port ${PORT}`);
 });
 
-// Add HTTPS server
 try {
+    // Construct absolute paths to the certificate files
+    const keyPath = path.join(__dirname, 'certs', 'key.pem'); // Adjust path as needed
+    const certPath = path.join(__dirname, 'certs', 'cert.pem'); // Adjust path as needed
+
     const httpsOptions = {
-        key: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/privkey.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/fullchain.pem')
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath)
     };
 
     https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
