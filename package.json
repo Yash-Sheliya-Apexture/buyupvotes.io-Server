@@ -1,16 +1,8 @@
 {
   "name": "buyupvotes-backend",
   "version": "1.0.0",
-  "description": "Backend for Buy Upvotes",
-  "main": "server.js",
-  "type": "module",
-  "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
-  },
-  "keywords": [],
   "author": "",
-  "license": "MIT",
+  "main": "server.js",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -34,7 +26,12 @@
     "redis": "^4.7.0",
     "uuid": "^11.0.5"
   },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
-  }
+  "description": "Backend for Buy Upvotes",
+  "keywords": [],
+  "license": "MIT",
+  "scripts": {
+    "dev": "bun run server.js",
+    "start": "bun run server.js"
+  },
+  "type": "module"
 }
