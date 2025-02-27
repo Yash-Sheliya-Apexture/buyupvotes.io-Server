@@ -400,7 +400,7 @@ app.use(compression());
 app.use(morgan('dev'));
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://redditmarketing.company'],  // Corrected to include protocol
+    origin: ['http://localhost:5173', '*'],  // Corrected to include protocol
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -416,12 +416,11 @@ app.use((req, res, next) => {
     next();
 });
 
-// Health check endpoint
 app.get('/health', (req, res) => {
     res.status(200).send('OK');
 });
 app.get('/', (req, res) => {
-    res.send('Welcome to the api.redditmarketing.company');
+    res.send('Welcome to the buyupvotes.io API server!');
 });
 // Routes
 app.use("/api/auth", authRoutes);
