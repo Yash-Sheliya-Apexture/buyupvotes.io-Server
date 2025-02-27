@@ -39,19 +39,19 @@ const HTTPS_PORT = 443;
 
 // Continue to serve HTTP for backward compatibility
 http.createServer(app).listen(PORT, () => {
-console.log(`HTTP Server is running on port ${PORT}`);
+    console.log(`HTTP Server is running on port ${PORT}`);
 });
 
 // Add HTTPS server
 try {
-const httpsOptions = {
-key: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/privkey.pem'),
-cert: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/fullchain.pem')
-};
+    const httpsOptions = {
+        key: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/api.redditmarketing.company/fullchain.pem')
+    };
 
-https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
-console.log(`HTTPS Server is running on port ${HTTPS_PORT}`);
-});
+    https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
+        console.log(`HTTPS Server is running on port ${HTTPS_PORT}`);
+    });
 } catch (error) {
-console.error('Failed to start HTTPS server:', error.message);
+    console.error('Failed to start HTTPS server:', error.message);
 }
