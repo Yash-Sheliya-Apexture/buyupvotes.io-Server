@@ -1,14 +1,14 @@
 module.exports = {
   apps: [
     {
-      name: 'buyupvotes-backend',
+      name: 'redditmarketing.company',
       script: 'server.js',
       interpreter: 'bun',
       watch: false,
       autorestart: true,
       env: {
         NODE_ENV: 'production',
-        USE_HTTPS: 'false',  // Add this for local development
+        USE_HTTPS: 'true',  // Add this for local development
       },
     },
   ],
