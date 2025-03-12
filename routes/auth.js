@@ -210,14 +210,78 @@
 // export default router;
 
 
+// import express from 'express';
+// import { register, login, getUserData, updateUserData, refreshAccessToken, resetPassword, forgotPassword, verifyOtpAndResetPassword , resendResetOtp } from '../controllers/auth.js';
+// import authMiddleware from '../middlewares/authMiddleware.js';
+// import { saveOrder, getUserOrders, cancelOrder } from '../controllers/OrderController.js'; // Import cancelOrder
+
+
+// const router = express.Router();
+
+// // Open Routes
+// router.post('/register', register);
+// router.post('/login', login);
+
+// // Protected Route - Get User Data
+// router.get('/user', authMiddleware, getUserData);
+// // Protected Route - Update User Data
+// router.put('/user', authMiddleware, updateUserData);
+
+// router.post('/reset-password', authMiddleware, resetPassword)
+// router.post('/forgot-password', forgotPassword);
+// router.post('/resend-reset-otp', resendResetOtp);
+// router.post('/verify-otp-reset-password', verifyOtpAndResetPassword);
+
+// // Refresh Token Route
+// router.post('/refresh-token', refreshAccessToken);
+
+// // Order Routes (Protected)
+// router.post('/submit-order', authMiddleware, saveOrder); // Changed function name
+// router.get('/orders', authMiddleware, getUserOrders);
+// router.put('/orders/:orderId', authMiddleware, cancelOrder); // New cancel order route
+
+// export default router;
+
+
+// import express from 'express';
+// import { register, login, getUserData, updateUserData, refreshAccessToken, resetPassword, forgotPassword, verifyOtpAndResetPassword , resendResetOtp } from '../controllers/auth.js';
+// import authMiddleware from '../middlewares/authMiddleware.js';
+// import { saveOrder, getUserOrders, cancelOrder } from '../controllers/OrderController.js'; // Import getUserOrdersByUserId
+
+// const router = express.Router();
+
+// // Open Routes
+// router.post('/register', register);
+// router.post('/login', login);
+
+// // Protected Route - Get User Data
+// router.get('/user', authMiddleware, getUserData);
+// // Protected Route - Update User Data
+// router.put('/user', authMiddleware, updateUserData);
+
+// router.post('/reset-password', authMiddleware, resetPassword)
+// router.post('/forgot-password', forgotPassword);
+// router.post('/resend-reset-otp', resendResetOtp);
+// router.post('/verify-otp-reset-password', verifyOtpAndResetPassword);
+
+// // Refresh Token Route
+// router.post('/refresh-token', refreshAccessToken);
+
+// // Order Routes (Protected)
+// router.post('/submit-order', authMiddleware, saveOrder);
+// router.get('/orders', authMiddleware, getUserOrders); // Original route
+// router.put('/orders/:orderId', authMiddleware, cancelOrder);
+
+// export default router;
+
+
+// auth.js (Route)
 import express from 'express';
-import { register, login, getUserData, updateUserData, refreshAccessToken, resetPassword, forgotPassword, verifyOtpAndResetPassword , resendResetOtp } from '../controllers/auth.js';
+import { register, login, getUserData, updateUserData, refreshAccessToken, resetPassword, forgotPassword, verifyOtpAndResetPassword , resendResetOtp, logout } from '../controllers/auth.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import { saveOrder, getUserOrders, cancelOrder } from '../controllers/OrderController.js'; // Import cancelOrder
+import { saveOrder, getUserOrders, cancelOrder } from '../controllers/OrderController.js'; // Import getUserOrdersByUserId
 
-
-const 
-router = express.Router();
+const router = express.Router();
 
 // Open Routes
 router.post('/register', register);
@@ -235,10 +299,11 @@ router.post('/verify-otp-reset-password', verifyOtpAndResetPassword);
 
 // Refresh Token Route
 router.post('/refresh-token', refreshAccessToken);
+router.post('/logout', logout);
 
 // Order Routes (Protected)
-router.post('/submit-order', authMiddleware, saveOrder); // Changed function name
-router.get('/orders', authMiddleware, getUserOrders);
-router.put('/orders/:orderId', authMiddleware, cancelOrder); // New cancel order route
+router.post('/submit-order', authMiddleware, saveOrder);
+router.get('/orders', authMiddleware, getUserOrders); // Original route
+router.put('/orders/:orderId', authMiddleware, cancelOrder);
 
 export default router;
