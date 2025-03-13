@@ -827,7 +827,6 @@ export const getUserOrders = async (req, res) => {
     }
 };
 
-
 export const cancelOrder = async (req, res) => {
     const { orderId } = req.params;
 
