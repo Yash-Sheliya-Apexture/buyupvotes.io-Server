@@ -4339,7 +4339,7 @@ console.log("SMTP_PASS: (length):", process.env.SMTP_PASS ? process.env.SMTP_PAS
 const googleClient = new OAuth2Client({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    redirectUri: 'http://localhost:5173', //  🔑🔑🔑 IMPORTANT:  REDIRECT URI - Match your frontend URL 🔑🔑🔑
+    redirectUri: process.env.GOOGLE_REDIRECT_URI, //  🔑🔑🔑 IMPORTANT:  REDIRECT URI - Match your frontend URL 🔑🔑🔑
 });
 
 
