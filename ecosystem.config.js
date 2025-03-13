@@ -8,7 +8,7 @@ module.exports = {
       autorestart: true,
       env: {
         NODE_ENV: 'production',
-        USE_HTTPS: 'true',  // Add this for local development
+        USE_HTTPS: 'true',  // Add this for local development false
       },
     },
   ],

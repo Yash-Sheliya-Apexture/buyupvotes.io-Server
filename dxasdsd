@@ -1,0 +1,761 @@
+[33mcommit e390f98c3c87a1aeca64961fbff9f5ec092b73d6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mserver[m[33m)[m
+Author: Yash-Sheliya-Apexture <yash@apexture.in>
+Date:   Thu Mar 13 15:49:43 2025 +0530
+
+    add new
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 41bb641..58b2fb3 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -1,5 +1,6 @@[m
+ # Node.js dependencies[m
+ node_modules/[m
+[32m+[m[32m.env[m
+ [m
+ # Environment variables[m
+ # .env[m
+[1mdiff --git a/app.js b/app.js[m
+[1mindex 02a85ca..04c361e 100644[m
+[1m--- a/app.js[m
+[1m+++ b/app.js[m
+[36m@@ -611,6 +611,97 @@[m
+ [m
+ [m
+ [m
+[32m+[m[32m// import express from 'express';[m
+[32m+[m[32m// import dotenv from 'dotenv';[m
+[32m+[m[32m// import connectDB from './config/db.js';[m
+[32m+[m[32m// import authRoutes from './routes/auth.js';[m
+[32m+[m[32m// import contactRoutes from './routes/contact.js';[m
+[32m+[m[32m// import cors from 'cors';[m
+[32m+[m[32m// import paymentRoutes from './routes/paymentRoutes.js';[m
+[32m+[m[32m// import cookieParser from 'cookie-parser';[m
+[32m+[m[32m// import { errorHandler } from './middlewares/errorMiddleware.js';[m
+[32m+[m[32m// import helmet from 'helmet';[m
+[32m+[m[32m// import compression from 'compression';[m
+[32m+[m[32m// import morgan from 'morgan';[m
+[32m+[m[32m// import adminRoutes from './routes/adminRoutes.js';[m
+[32m+[m
+[32m+[m[32m// dotenv.config();[m
+[32m+[m
+[32m+[m[32m// connectDB();[m
+[32m+[m
+[32m+[m[32m// const app = express();[m
+[32m+[m
+[32m+[m[32m// // Security middleware[m
+[32m+[m[32m// // app.use(helmet());[m
+[32m+[m[32m// app.use(helmet.crossOriginOpenerPolicy({ policy: "same-origin-allow-popups" })); // Add this middleware[m
+[32m+[m
+[32m+[m[32m// // Compression middleware[m
+[32m+[m[32m// app.use(compression());[m
+[32m+[m
+[32m+[m[32m// // Logging middleware (for development)[m
+[32m+[m[32m// if (process.env.NODE_ENV === 'development') {[m
+[32m+[m[32m//     app.use(morgan('dev'));[m
+[32m+[m[32m// }[m
+[32m+[m
+[32m+[m[32m// // CORS configuration[m
+[32m+[m[32m// const allowedOrigins = [[m
+[32m+[m[32m//     'http://localhost:5173',[m
+[32m+[m[32m//     'https://redditmarketing.company',[m
+[32m+[m[32m//     'https://pay.cryptomus.com',[m
+[32m+[m[32m//     'pay.cryptomus.com'[m
+[32m+[m[32m// ];[m
+[32m+[m
+[32m+[m[32m// app.use(cors({[m
+[32m+[m[32m//     origin: (origin, callback) => {[m
+[32m+[m[32m//         if (!origin || allowedOrigins.includes(origin)) {[m
+[32m+[m[32m//             callback(null, true);[m
+[32m+[m[32m//         } else {[m
+[32m+[m[32m//             callback(new Error('Not allowed by CORS'));[m
+[32m+[m[32m//         }[m
+[32m+[m[32m//     },[m
+[32m+[m[32m//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],[m
+[32m+[m[32m//     allowedHeaders: ['Content-Type', 'Authorization'],[m
+[32m+[m[32m//     credentials: true,[m
+[32m+[m[32m// }));[m
+[32m+[m
+[32m+[m[32m// // Cookie parser middleware[m
+[32m+[m[32m// app.use(cookieParser());[m
+[32m+[m
+[32m+[m[32m// // Body parser middleware with size limit[m
+[32m+[m[32m// app.use(express.json({ limit: '10kb' }));[m
+[32m+[m[32m// app.use(express.urlencoded({ extended: true })); // Add this line for URL-encoded bodies[m
+[32m+[m
+[32m+[m[32m// // Cache control middleware (for development - adjust for production)[m
+[32m+[m[32m// app.use((req, res, next) => {[m
+[32m+[m[32m//     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');[m
+[32m+[m[32m//     res.setHeader('Pragma', 'no-cache');[m
+[32m+[m[32m//     res.setHeader('Expires', '0');[m
+[32m+[m[32m//     next();[m
+[32m+[m[32m// });[m
+[32m+[m
+[32m+[m[32m// // Health check endpoint[m
+[32m+[m[32m// app.get('/health', (req, res) => {[m
+[32m+[m[32m//     res.status(200).send('OK');[m
+[32m+[m[32m// });[m
+[32m+[m
+[32m+[m[32m// // API welcome endpoint[m
+[32m+[m[32m// app.get('/', (req, res) => {[m
+[32m+[m[32m//     res.send('Welcome to the buyupvotes.io API server!');[m
+[32m+[m[32m// });[m
+[32m+[m
+[32m+[m[32m// // Routes[m
+[32m+[m[32m// app.use('/api/auth', authRoutes);[m
+[32m+[m[32m// app.use('/api/contact', contactRoutes);[m
+[32m+[m[32m// app.use('/api/payment', paymentRoutes);[m
+[32m+[m[32m// app.use('/api/admin', adminRoutes);[m
+[32m+[m
+[32m+[m[32m// // Error handling middleware[m
+[32m+[m[32m// app.use(errorHandler);[m
+[32m+[m
+[32m+[m[32m// export default app;[m
+[32m+[m
+[32m+[m
+[32m+[m
+ import express from 'express';[m
+ import dotenv from 'dotenv';[m
+ import connectDB from './config/db.js';[m
+
+[33mcommit 9fac18be2b3802a4dec1aa99ba71cee43f97481e[m
+Author: Yash-Sheliya-Apexture <yash@apexture.in>
+Date:   Thu Mar 13 15:45:57 2025 +0530
+
+    delete in .env
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 58b2fb3..41bb641 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -1,6 +1,5 @@[m
+ # Node.js dependencies[m
+ node_modules/[m
+[31m-.env[m
+ [m
+ # Environment variables[m
+ # .env[m
+
+[33mcommit d6224f4cfa4f3d28faa864aed5c749168f1e6e8c[m
+Author: Yash-Sheliya-Apexture <yash@apexture.in>
+Date:   Thu Mar 13 15:29:17 2025 +0530
+
+    add new code and add payment and login
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 41bb641..58b2fb3 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -1,5 +1,6 @@[m
+ # Node.js dependencies[m
+ node_modules/[m
+[32m+[m[32m.env[m
+ [m
+ # Environment variables[m
+ # .env[m
+
+[33mcommit 045d0346ec84bdccf9ada673a7aece2f182c8cd3[m
+Author: Yash-Sheliya-Apexture <yash@apexture.in>
+Date:   Thu Mar 13 15:27:09 2025 +0530
+
+    add new code and add payment and login
+
+[1mdiff --git a/controllers/auth.js b/controllers/auth.js[m
+[1mindex 436aff8..f3f1d71 100644[m
+[1m--- a/controllers/auth.js[m
+[1m+++ b/controllers/auth.js[m
+[36m@@ -3779,490 +3779,1125 @@[m
+ [m
+ [m
+ [m
+[32m+[m[32m// import bcrypt from 'bcryptjs';[m
+[32m+[m[32m// import jwt from 'jsonwebtoken';[m
+[32m+[m[32m// import User from '../models/User.js';[m
+[32m+[m[32m// import nodemailer from 'nodemailer';[m
+[32m+[m[32m// import dotenv from 'dotenv';[m
+[32m+[m
+[32m+[m[32m// dotenv.config();[m
+[32m+[m
+[32m+[m[32m// // Validate required environment variables[m
+[32m+[m[32m// const checkEnvVariables = () => {[m
+[32m+[m[32m//   if (!process.env.JWT_SECRET) {[m
+[32m+[m[32m//     console.error('FATAL ERROR: JWT_SECRET is not defined in environment variables.');[m
+[32m+[m[32m//     process.exit(1); // Exit if JWT secret is missing[m
+[32m+[m[32m//   }[m
+[32m+[m[32m//   if (!process.env.JWT_REFRESH_SECRET) {[m
+[32m+[m[32m//     console.error('FATAL ERROR: JWT_REFRESH_SECRET is not defined in environment variables.');[m
+[32m+[m[32m//     process.exit(1); // Exit if JWT refresh secret is missing[m
+[32m+[m[32m//   }[m
+[32m+[m[32m//   if (!process.env.SMTP_HOST || !process.env.SMTP_PORT || !process.env.SMTP_USER || !process.env.SMTP_PASS) {[m
+[32m+[m[32m//     console.error('FATAL ERROR: SMTP settings are not defined in environment variables.');[m
+[32m+[m[32m//     process.exit(1); // Exit if SMTP settings are missing[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// checkEnvVariables();[m
+[32m+[m
+[32m+[m[32m// const generateAccessToken = (user) => {[m
+[32m+[m[32m//     return jwt.sign([m
+[32m+[m[32m//         { id: user._id, role: user.role },[m
+[32m+[m[32m//         process.env.JWT_SECRET,[m
+[32m+[m[32m//         { expiresIn: '12h' }[m
+[32m+[m[32m//     );[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// const generateRefreshToken = (user) => {[m
+[32m+[m[32m//     return jwt.sign([m
+[32m+[m[32m//         { id: user._id, role: user.role },[m
+[32m+[m[32m//         process.env.JWT_REFRESH_SECRET,[m
+[32m+[m[32m//         { expiresIn: '7d' }[m
+[32m+[m[32m//     );[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m
+[32m+[m[32m// // Create Nodemailer transporter (moved to top level for re-use)[m
+[32m+[m[32m// const transporter = nodemailer.createTransport({[m
+[32m+[m[32m//   host: process.env.SMTP_HOST,[m
+[32m+[m[32m//   port: process.env.SMTP_PORT,[m
+[32m+[m[32m//   secure: process.env.SMTP_PORT === '465',[m
+[32m+[m[32m//   auth: {[m
+[32m+[m[32m//     user: process.env.SMTP_USER,[m
+[32m+[m[32m//     pass: process.env.SMTP_PASS,[m
+[32m+[m[32m//   },[m
+[32m+[m[32m//   tls: {  // Add this to bypass certificate issues in some environments[m
+[32m+[m[32m//     rejectUnauthorized: false,[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// });[m
+[32m+[m
+[32m+[m[32m// console.log("SMTP_PASS: (length):", process.env.SMTP_PASS ? process.env.SMTP_PASS.length : "undefined"); // Check if it's being read[m
+[32m+[m[32m// // Register[m
+[32m+[m[32m// export const register = async (req, res) => {[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     const { firstName, lastName, email, password, confirmPassword } = req.body;[m
+[32m+[m
+[32m+[m[32m//     // Normalize input[m
+[32m+[m[32m//     const normalizedEmail = email.trim().toLowerCase();[m
+[32m+[m
+[32m+[m[32m//     // Email Regex Validation[m
+[32m+[m[32m//     const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/i;[m
+[32m+[m[32m//     if (!emailRegex.test(normalizedEmail)) {[m
+[32m+[m[32m//       return res.status(400).json({ code: "INVALID_EMAIL", message: "Email must be from Gmail, Yahoo, or Outlook." });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Password Validation[m
+[32m+[m[32m//     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;[m
+[32m+[m[32m//     if (!passwordRegex.test(password)) {[m
+[32m+[m[32m//       return res.status(400).json({[m
+[32m+[m[32m//         code: "WEAK_PASSWORD",[m
+[32m+[m[32m//         message: "Password must be at least 8 characters, include one uppercase letter, and one special symbol."[m
+[32m+[m[32m//       });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     if (password !== confirmPassword) {[m
+[32m+[m[32m//       return res.status(400).json({ code: "PASSWORD_MISMATCH", message: "Passwords do not match." });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Check if email exists[m
+[32m+[m[32m//     const existingUser = await User.findOne({ email: normalizedEmail });[m
+[32m+[m[32m//     if (existingUser) {[m
+[32m+[m[32m//       return res.status(400).json({ code: "EMAIL_EXISTS", message: "Email already exists." });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Hash password and create user[m
+[32m+[m[32m//     const hashedPassword = await bcrypt.hash(password, 10);[m
+[32m+[m[32m//     const newUser = new User({ firstName, lastName, email: normalizedEmail, password: hashedPassword });[m
+[32m+[m[32m//     await newUser.save();[m
+[32m+[m
+[32m+[m[32m//     // Generate tokens[m
+[32m+[m[32m//     const accessToken = generateAccessToken(newUser);[m
+[32m+[m[32m//     const refreshToken = generateRefreshToken(newUser);[m
+[32m+[m
+[32m+[m[32m//     // Store the refresh token in the database[m
+[32m+[m[32m//     newUser.refreshToken = refreshToken;[m
+[32m+[m[32m//     await newUser.save();[m
+[32m+[m
+[32m+[m[32m//     // Set cookie before sending JSON response[m
+[32m+[m[32m//     res.cookie('refreshToken', refreshToken, {[m
+[32m+[m[32m//       httpOnly: true,[m
+[32m+[m[32m//       secure: true,[m
+[32m+[m[32m//       sameSite: 'None',[m
+[32m+[m[32m//       maxAge: 7 * 24 * 60 * 60 * 1000,[m
+[32m+[m[32m//     });[m
+[32m+[m
+[32m+[m[32m//     // Send successful registration response[m
+[32m+[m[32m//     res.status(201).json({[m
+[32m+[m[32m//       code: "SUCCESS",[m
+[32m+[m[32m//       message: "User registered successfully.",[m
+[32m+[m[32m//       user: {[m
+[32m+[m[32m//         id: newUser._id,[m
+[32m+[m[32m//         firstName: newUser.firstName,[m
+[32m+[m[32m//         lastName: newUser.lastName,[m
+[32m+[m[32m//         email: newUser.email,[m
+[32m+[m[32m//         role: newUser.role,[m
+[32m+[m[32m//       },[m
+[32m+[m[32m//       tokens: { accessToken }[m
+[32m+[m[32m//     });[m
+[32m+[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error(err);[m
+[32m+[m[32m//     res.status(500).json({ code: "SERVER_ERROR", message: "An internal server error occurred." });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// // Login[m
+[32m+[m[32m// export const login = async (req, res) => {[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     const { email, password } = req.body;[m
+[32m+[m
+[32m+[m[32m//     // Normalize input[m
+[32m+[m[32m//     const normalizedEmail = email.trim().toLowerCase();[m
+[32m+[m
+[32m+[m[32m//     // Check if user exists[m
+[32m+[m[32m//     const user = await User.findOne({ email: normalizedEmail });[m
+[32m+[m[32m//     if (!user) {[m
+[32m+[m[32m//       return res.status(400).json({ code: "INVALID_EMAIL", message: "Invalid email or password." });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Verify password[m
+[32m+[m[32m//     const isMatch = await bcrypt.compare(password, user.password);[m
+[32m+[m[32m//     if (!isMatch) {[m
+[32m+[m[32m//       return res.status(400).json({ code: "INVALID_PASSWORD", message: "Invalid email or password." });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Generate tokens[m
+[32m+[m[32m//     const accessToken = generateAccessToken(user);[m
+[32m+[m[32m//     const refreshToken = generateRefreshToken(user);[m
+[32m+[m
+[32m+[m[32m//     // Store the refresh token in the database[m
+[32m+[m[32m//     user.refreshToken = refreshToken;[m
+[32m+[m[32m//     await user.save();[m
+[32m+[m
+[32m+[m[32m//     // Set cookie before sending JSON response[m
+[32m+[m[32m//     res.cookie('refreshToken', refreshToken, {[m
+[32m+[m[32m//       httpOnly: true,[m
+[32m+[m[32m//       secure: true,[m
+[32m+[m[32m//       sameSite: 'None',[m
+[32m+[m[32m//       maxAge: 7 * 24 * 60 * 60 * 1000,[m
+[32m+[m[32m//     });[m
+[32m+[m
+[32m+[m[32m//     // Respond with successful login, including tokens and user info[m
+[32m+[m[32m//     res.status(200).json({[m
+[32m+[m[32m//       code: "SUCCESS",[m
+[32m+[m[32m//       message: "Login successful.",[m
+[32m+[m[32m//       user: {[m
+[32m+[m[32m//         id: user._id,[m
+[32m+[m[32m//         firstName: user.firstName,[m
+[32m+[m[32m//         lastName: user.lastName,[m
+[32m+[m[32m//         email: user.email,[m
+[32m+[m[32m//         role: user.role,[m
+[32m+[m[32m//       },[m
+[32m+[m[32m//       tokens: { accessToken },[m
+[32m+[m[32m//     });[m
+[32m+[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error(err);[m
+[32m+[m[32m//     res.status(500).json({ code: "SERVER_ERROR", message: "An internal server error occurred." });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// // Refresh Access Token[m
+[32m+[m[32m// export const refreshAccessToken = async (req, res) => {[m
+[32m+[m[32m//   const { refreshToken } = req.cookies; // Or retrieve it from request body if not using cookies[m
+[32m+[m
+[32m+[m[32m//   if (!refreshToken) {[m
+[32m+[m[32m//     return res.status(401).json({ message: "Refresh token is missing" });[m
+[32m+[m[32m//   }[m
+[32m+[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     // Verify the refresh token[m
+[32m+[m[32m//     const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);[m
+[32m+[m[32m//     const user = await User.findById(payload.id);[m
+[32m+[m
+[32m+[m[32m//     if (!user || user.refreshToken !== refreshToken) {[m
+[32m+[m[32m//       return res.status(403).json({ message: "Invalid refresh token" });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Generate a new access token[m
+[32m+[m[32m//     const accessToken = jwt.sign([m
+[32m+[m[32m//       { id: user._id, role: user.role },[m
+[32m+[m[32m//       process.env.JWT_SECRET,[m
+[32m+[m[32m//       { expiresIn: "12h" }[m
+[32m+[m[32m//     );[m
+[32m+[m
+[32m+[m[32m//     const newRefreshToken = generateRefreshToken(user);[m
+[32m+[m[32m//     user.refreshToken = newRefreshToken;[m
+[32m+[m[32m//     await user.save();[m
+[32m+[m
+[32m+[m[32m//     res.cookie('refreshToken', newRefreshToken, {[m
+[32m+[m[32m//       httpOnly: true,[m
+[32m+[m[32m//       secure: true,[m
+[32m+[m[32m//       sameSite: 'None',[m
+[32m+[m[32m//       maxAge: 7 * 24 * 60 * 60 * 1000,[m
+[32m+[m[32m//     });[m
+[32m+[m
+[32m+[m[32m//     // Respond with the new access token[m
+[32m+[m[32m//     res.status(200).json({ accessToken });[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error("Error refreshing token:", err);[m
+[32m+[m[32m//     res.status(403).json({ message: "Invalid or expired refresh token" });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// // Logout[m
+[32m+[m[32m// export const logout = async (req, res) => {[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     const { refreshToken } = req.body;[m
+[32m+[m
+[32m+[m[32m//     if (!refreshToken) return res.status(400).json({ message: 'Refresh token is required.' });[m
+[32m+[m
+[32m+[m[32m//     const user = await User.findOne({ refreshToken });[m
+[32m+[m[32m//     if (!user) return res.status(400).json({ message: 'Invalid refresh token.' });[m
+[32m+[m
+[32m+[m[32m//     user.refreshToken = null;[m
+[32m+[m[32m//     await user.save();[m
+[32m+[m[32m//     res.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'None' });[m
+[32m+[m
+[32m+[m[32m//     res.status(200).json({ message: 'Logged out successfully.' });[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error(err);[m
+[32m+[m[32m//     res.status(500).json({ message: 'Server error.' });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m
+[32m+[m[32m// // Get User Data[m
+[32m+[m[32m// export const getUserData = async (req, res) => {[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     // Use the user data from the auth middleware[m
+[32m+[m[32m//     const user = req.user;[m
+[32m+[m
+[32m+[m[32m//     if (!user) {[m
+[32m+[m[32m//       return res.status(404).json({ message: 'User not found.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Return user data[m
+[32m+[m[32m//     res.status(200).json({[m
+[32m+[m[32m//       id: user._id,[m
+[32m+[m[32m//       firstName: user.firstName,[m
+[32m+[m[32m//       lastName: user.lastName,[m
+[32m+[m[32m//       email: user.email,[m
+[32m+[m[32m//       role: user.role,[m
+[32m+[m[32m//     });[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error(err);[m
+[32m+[m[32m//     res.status(500).json({ message: 'Server error.' });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// // Update User Data[m
+[32m+[m[32m// export const updateUserData = async (req, res) => {[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     // Use the user data from the auth middleware[m
+[32m+[m[32m//     const user = req.user;[m
+[32m+[m[32m//     const { firstName, lastName, email } = req.body;[m
+[32m+[m
+[32m+[m[32m//     if (!user) {[m
+[32m+[m[32m//       return res.status(404).json({ message: 'User not found.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Update fields[m
+[32m+[m[32m//     if (firstName) user.firstName = firstName;[m
+[32m+[m[32m//     if (lastName) user.lastName = lastName;[m
+[32m+[m[32m//     if (email) user.email = email;[m
+[32m+[m
+[32m+[m[32m//     // Save updated user[m
+[32m+[m[32m//     await user.save();[m
+[32m+[m
+[32m+[m[32m//     // Respond with updated user data[m
+[32m+[m[32m//     res.status(200).json({[m
+[32m+[m[32m//       message: 'User data updated successfully.',[m
+[32m+[m[32m//       user: {[m
+[32m+[m[32m//         id: user._id,[m
+[32m+[m[32m//         firstName: user.firstName,[m
+[32m+[m[32m//         lastName: user.lastName,[m
+[32m+[m[32m//         email: user.email,[m
+[32m+[m[32m//         role: user.role,[m
+[32m+[m[32m//       },[m
+[32m+[m[32m//     });[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error(err);[m
+[32m+[m[32m//     res.status(500).json({ message: 'Server error.' });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// // Forgot password[m
+[32m+[m[32m// export const forgotPassword = async (req, res) => {[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     const { email } = req.body;[m
+[32m+[m
+[32m+[m[32m//     const user = await User.findOne({ email });[m
+[32m+[m[32m//     if (!user) {[m
+[32m+[m[32m//       return res.status(404).json({ message: 'User not found.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     const otp = Math.floor(100000 + Math.random() * 900000).toString();[m
+[32m+[m[32m//     const otpExpiration = Date.now() + 10 * 60 * 1000;[m
+[32m+[m
+[32m+[m[32m//     user.otp = otp;[m
+[32m+[m[32m//     user.otpExpiration = otpExpiration;[m
+[32m+[m[32m//     await user.save();[m
+[32m+[m
+[32m+[m[32m//     // Send OTP via email[m
+[32m+[m[32m//     try {[m
+[32m+[m[32m//       const mailOptions = {[m
+[32m+[m[32m//         to: user.email,[m
+[32m+[m[32m//         from: process.env.EMAIL_USER, // Use your verified email address[m
+[32m+[m[32m//         subject: 'Password Reset OTP',[m
+[32m+[m[32m//         text: `Your password reset OTP is: ${otp}. It is valid for 10 minutes.`,[m
+[32m+[m[32m//       };[m
+[32m+[m
+[32m+[m[32m//       const info = await transporter.sendMail(mailOptions);[m
+[32m+[m[32m//       console.log("Message sent: %s", info.messageId);[m
+[32m+[m
+[32m+[m[32m//       res.status(200).json({ message: 'OTP sent to your email.' });[m
+[32m+[m
+[32m+[m[32m//     } catch (emailError) {[m
+[32m+[m[32m//       console.error('Error sending email:', emailError);[m
+[32m+[m[32m//       return res.status(500).json({ message: 'Failed to send OTP email.', error: emailError.message });  // Include error message[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error('Unexpected server error:', err);[m
+[32m+[m[32m//     res.status(500).json({ message: 'Server error.', error: err.message });  // Include error message[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m
+[32m+[m[32m// // Resend OTP[m
+[32m+[m[32m// export const resendResetOtp = async (req, res) => {[m
+[32m+[m[32m//   const { email } = req.body;[m
+[32m+[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     // Find user by email[m
+[32m+[m[32m//     const user = await User.findOne({ email });[m
+[32m+[m[32m//     if (!user) {[m
+[32m+[m[32m//       return res.status(404).json({ message: 'User not found.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Check if OTP exists and has expired[m
+[32m+[m[32m//     if (user.otp && user.otpExpiration > Date.now()) {[m
+[32m+[m[32m//       // OTP is still valid[m
+[32m+[m[32m//       return res.status(400).json({ message: 'OTP is still valid. Please check your email.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Generate a new 6-digit OTP[m
+[32m+[m[32m//     const otp = Math.floor(100000 + Math.random() * 900000).toString();[m
+[32m+[m[32m//     const otpExpiration = Date.now() + 10 * 60 * 1000; // 10 minutes from now[m
+[32m+[m
+[32m+[m[32m//     // Save the new OTP and expiration time to the user's record[m
+[32m+[m[32m//     try {[m
+[32m+[m[32m//       user.otp = otp;[m
+[32m+[m[32m//       user.otpExpiration = otpExpiration;[m
+[32m+[m[32m//       await user.save();[m
+[32m+[m[32m//     } catch (dbError) {[m
+[32m+[m[32m//       console.error('Error saving OTP to database:', dbError);[m
+[32m+[m[32m//       return res.status(500).json({ message: 'Database save error.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Send OTP via email[m
+[32m+[m[32m//     try {[m
+[32m+[m[32m//       await transporter.sendMail({[m
+[32m+[m[32m//         to: user.email,[m
+[32m+[m[32m//         from: process.env.EMAIL_USER,  // From email address[m
+[32m+[m[32m//         subject: 'Password Reset OTP',[m
+[32m+[m[32m//         text: `Your password reset OTP is: ${otp}. It is valid for 10 minutes.`,[m
+[32m+[m[32m//       });[m
+[32m+[m[32m//     } catch (emailError) {[m
+[32m+[m[32m//       console.error('Error sending email:', emailError);[m
+[32m+[m[32m//       return res.status(500).json({ message: 'Failed to send OTP email.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     // Respond with success message[m
+[32m+[m[32m//     res.status(200).json({ message: 'New OTP sent to your email.' });[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error('Unexpected server error:', err);[m
+[32m+[m[32m//     res.status(500).json({ message: 'Server error.' });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// // Verify OTP and Reset Password[m
+[32m+[m[32m// export const verifyOtpAndResetPassword = async (req, res) => {[m
+[32m+[m[32m//   const { email, otp, newPassword, confirmPassword } = req.body;[m
+[32m+[m
+[32m+[m[32m//   if (!email || !otp || !newPassword || !confirmPassword) {[m
+[32m+[m[32m//     return res.status(400).json({ message: 'All fields are required.' });[m
+[32m+[m[32m//   }[m
+[32m+[m
+[32m+[m[32m//   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])(?=.{8,})/;[m
+[32m+[m
+[32m+[m[32m//   if (newPassword !== confirmPassword) {[m
+[32m+[m[32m//     return res.status(400).json({ message: 'Passwords do not match.' });[m
+[32m+[m[32m//   }[m
+[32m+[m
+[32m+[m[32m//   if (!passwordRegex.test(newPassword)) {[m
+[32m+[m[32m//     return res.status(400).json({ message: 'Password must be at least 8 characters, include one uppercase letter, and one special symbol.' });[m
+[32m+[m[32m//   }[m
+[32m+[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     const user = await User.findOne({ email });[m
+[32m+[m[32m//     if (!user) {[m
+[32m+[m[32m//       return res.status(404).json({ message: 'User not found.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     if (user.otp !== otp || user.otpExpiration < Date.now()) {[m
+[32m+[m[32m//       return res.status(400).json({ message: 'Invalid Verification code' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     const hashedPassword = await bcrypt.hash(newPassword, 10);[m
+[32m+[m[32m//     user.password = hashedPassword;[m
+[32m+[m
+[32m+[m[32m//     user.otp = undefined;[m
+[32m+[m[32m//     user.otpExpiration = undefined;[m
+[32m+[m[32m//     await user.save();[m
+[32m+[m
+[32m+[m[32m//     res.status(200).json({ message: 'Password reset successfully.' });[m
+[32m+[m[32m//   } catch (err) {[m
+[32m+[m[32m//     console.error(err);[m
+[32m+[m[32m//     res.status(500).json({ message: 'Server error.' });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m[32m// // Reset Password[m
+[32m+[m[32m// export const resetPassword = async (req, res) => {[m
+[32m+[m[32m//   const { oldPassword, newPassword, confirmPassword } = req.body;[m
+[32m+[m[32m//   const userId = req.user._id;[m
+[32m+[m
+[32m+[m[32m//   try {[m
+[32m+[m[32m//     const user = await User.findById(userId);[m
+[32m+[m[32m//     if (!user) {[m
+[32m+[m[32m//       return res.status(404).json({ message: 'User not found.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     const isMatch = await bcrypt.compare(oldPassword, user.password);[m
+[32m+[m
+[32m+[m[32m//     if (!isMatch) {[m
+[32m+[m[32m//       return res.status(400).json({ message: 'Invalid old password.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     if (newPassword !== confirmPassword) {[m
+[32m+[m[32m//       return res.status(400).json({ message: 'Passwords do not match.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])(?=.{8,})/;[m
+[32m+[m
+[32m+[m[32m//     if (!passwordRegex.test(newPassword)) {[m
+[32m+[m[32m//       return res.status(400).json({ message: 'Password must be at least 8 characters, include one uppercase letter, and one special symbol.' });[m
+[32m+[m[32m//     }[m
+[32m+[m
+[32m+[m[32m//     const hashedPassword = await bcrypt.hash(newPassword, 10);[m
+[32m+[m[32m//     user.password = hashedPassword;[m
+[32m+[m
+[32m+[m[32m//     await user.save();[m
+[32m+[m[32m//     res.status(200).json({ message: 'Password updated successfully.' });[m
+[32m+[m[32m//   } catch (error) {[m
+[32m+[m[32m//     console.error('Error resetting password:', error);[m
+[32m+[m[32m//     res.status(500).json({ message: 'Server error.' });[m
+[32m+[m[32m//   }[m
+[32m+[m[32m// };[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+ import bcrypt from 'bcryptjs';[m
+ import jwt from 'jsonwebtoken';[m
+ import User from '../models/User.js';[m
+ import nodemailer from 'nodemailer';[m
+ import dotenv from 'dotenv';[m
+[32m+[m[32mimport { OAuth2Client } from 'google-auth-library'; // Import OAuth2Client[m
+ [m
+ dotenv.config();[m
+ [m
+ // Validate required environment variables[m
+ const checkEnvVariables = () => {[m
+[31m-  if (!process.env.JWT_SECRET) {[m
+[31m-    console.error('FATAL ERROR: JWT_SECRET is not defined in environment variables.');[m
+[31m-    process.exit(1); // Exit if JWT secret is missing[m
+[31m-  }[m
+[31m-  if (!process.env.JWT_REFRESH_SECRET) {[m
+[31m-    console.error('FATAL ERROR: JWT_REFRESH_SECRET is not defined in environment variables.');[m
+[31m-    process.exit(1); // Exit if JWT refresh secret is missing[m
+[31m-  }[m
+[31m-  if (!process.env.SMTP_HOST || !process.env.SMTP_PORT || !process.env.SMTP_USER || !process.env.SMTP_PASS) {[m
+[31m-    console.error('FATAL ERROR: SMTP settings are not defined in environment variables.');[m
+[31m-    process.exit(1); // Exit if SMTP settings are missing[m
+[31m-  }[m
+[32m+[m[32m    if (!process.env.JWT_SECRET) {[m
+[32m+[m[32m        console.error('FATAL ERROR: JWT_SECRET is not defined in environment variables.');[m
+[32m+[m[32m        process.exit(1); // Exit if JWT secret is missing[m
+[32m+[m[32m    }[m
+[32m+[m[32m    if (!process.env.JWT_REFRESH_SECRET) {[m
+[32m+[m[32m        console.error('FATAL ERROR: JWT_REFRESH_SECRET is not defined in environment variables.');[m
+[32m+[m[32m        process.exit(1); // Exit if JWT refresh secret is missing[m
+[32m+[m[32m    }[m
+[32m+[m[32m    if (!process.env.SMTP_HOST || !process.env.SMTP_PORT || !process.env.SMTP_USER || !process.env.SMTP_PASS) {[m
+[32m+[m[32m        console.error('FATAL ERROR: SMTP settings are not defined in environment variables.');[m
+[32m+[m[32m        process.exit(1); // Exit if SMTP settings are missing[m
+[32m+[m[32m    }[m
+[32m+[m[32m    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {[m
+[32m+[m[32m        console.error('FATAL ERROR: Google OAuth settings are not defined in environment variables.');[m
+[32m+[m[32m        process.exit(1); // Exit if Google OAuth settings are missing[m
+[32m+[m[32m    }[m
+ };[m
+ [m
+ checkEnvVariables();[m
+ [m
+ const generateAccessToken = (user) => {[m
+[31m-  return jwt.sign([m
+[31m-    { id: user._id, role: user.role },[m
+[31m-    process.env.JWT_SECRET,[m
+[31m-    { expiresIn: '12h' }[m
+[31m-  );[m
+[32m+[m[32m    return jwt.sign([m
+[32m+[m[32m        { id: user._id, role: user.role },[m
+[32m+[m[32m        process.env.JWT_SECRET,[m
+[32m+[m[32m        { expiresIn: '12h' }[m
+[32m+[m[32m    );[m
+ };[m
+ [m
+ const generateRefreshToken = (user) => {[m
+[31m-  return jwt.sign([m
+[31m-    { id: user._id, role: user.role },[m
+[31m-    process.env.JWT_REFRESH_SECRET,[m
+[31m-    { expiresIn: '7d' }[m
+[31m-  );[m
+[32m+[m[32m    return jwt.sign([m
+[32m+[m[32m        { id: user._id, role: user.role },[m
+[32m+[m[32m        process.env.JWT_REFRESH_SECRET,[m
+[32m+[m[32m        { expiresIn: '7d' }[m
+[32m+[m[32m    );[m
+ };[m
+ [m
+[32m+[m
+ // Create Nodemailer transporter (moved to top level for re-use)[m
+ const transporter = nodemailer.createTransport({[m
+[31m-  host: process.env.SMTP_HOST,[m
+[31m-  port: process.env.SMTP_PORT,[m
+[31m-  secure: process.env.SMTP_PORT === '465',[m
+[31m-  auth: {[m
+[31m-    user: process.env.SMTP_USER,[m
+[31m-    pass: process.env.SMTP_PASS,[m
+[31m-  },[m
+[31m-  tls: {  // Add this to bypass certificate issues in some environments[m
+[31m-    rejectUnauthorized: false,[m
+[31m-  }[m
+[32m+[m[32m    host: process.env.SMTP_HOST,[m
+[32m+[m[32m    port: process.env.SMTP_PORT,[m
+[32m+[m[32m    secure: process.env.SMTP_PORT === '465',[m
+[32m+[m[32m    auth: {[m
+[32m+[m[32m        user: process.env.SMTP_USER,[m
+[32m+[m[32m        pass: process.env.SMTP_PASS,[m
+[32m+[m[32m    },[m
+[32m+[m[32m    tls: {  // Add this to bypass certificate issues in some environments[m
+[32m+[m[32m        rejectUnauthorized: false,[m
+[32m+[m[32m    }[m
+ });[m
+ [m
+ console.log("SMTP_PASS: (length):", process.env.SMTP_PASS ? process.env.SMTP_PASS.length : "undefined"); // Check if it's being read[m
+[31m-// Register[m
+[31m-export const register = async (req, res) => {[m
+[31m-  try {[m
+[31m-    const { firstName, lastName, email, password, confirmPas
