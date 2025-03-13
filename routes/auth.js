@@ -275,9 +275,43 @@
 // export default router;
 
 
-// auth.js (Route)
+// // auth.js (Route)
+// import express from 'express';
+// import { register, login, getUserData, updateUserData, refreshAccessToken, resetPassword, forgotPassword, verifyOtpAndResetPassword , resendResetOtp, logout } from '../controllers/auth.js';
+// import authMiddleware from '../middlewares/authMiddleware.js';
+// import { saveOrder, getUserOrders, cancelOrder } from '../controllers/OrderController.js'; // Import getUserOrdersByUserId
+
+// const router = express.Router();
+
+// // Open Routes
+// router.post('/register', register);
+// router.post('/login', login);
+
+// // Protected Route - Get User Data
+// router.get('/user', authMiddleware, getUserData);
+// // Protected Route - Update User Data
+// router.put('/user', authMiddleware, updateUserData);
+
+// router.post('/reset-password', authMiddleware, resetPassword)
+// router.post('/forgot-password', forgotPassword);
+// router.post('/resend-reset-otp', resendResetOtp);
+// router.post('/verify-otp-reset-password', verifyOtpAndResetPassword);
+
+// // Refresh Token Route
+// router.post('/refresh-token', refreshAccessToken);
+// router.post('/logout', logout);
+
+// // Order Routes (Protected)
+// router.post('/submit-order', authMiddleware, saveOrder);
+// router.get('/orders', authMiddleware, getUserOrders); // Original route
+// router.put('/orders/:orderId', authMiddleware, cancelOrder);
+
+// export default router;
+
+
+
 import express from 'express';
-import { register, login, getUserData, updateUserData, refreshAccessToken, resetPassword, forgotPassword, verifyOtpAndResetPassword , resendResetOtp, logout } from '../controllers/auth.js';
+import { register, login, getUserData, updateUserData, refreshAccessToken, resetPassword, forgotPassword, verifyOtpAndResetPassword , resendResetOtp, logout, googleLoginCallback, adminLogin } from '../controllers/auth.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import { saveOrder, getUserOrders, cancelOrder } from '../controllers/OrderController.js'; // Import getUserOrdersByUserId
 
@@ -286,6 +320,10 @@ const router = express.Router();
 // Open Routes
 router.post('/register', register);
 router.post('/login', login);
+
+// Google Login Route
+router.post('/google-login', googleLoginCallback); // Google login callback route
+router.post('/admin-login', adminLogin);
 
 // Protected Route - Get User Data
 router.get('/user', authMiddleware, getUserData);
